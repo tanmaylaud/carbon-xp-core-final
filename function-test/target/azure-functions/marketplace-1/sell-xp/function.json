@@ -1,0 +1,14 @@
+{
+  "scriptFile" : "../function-test-1.0-SNAPSHOT.jar",
+  "entryPoint" : "com.db.carbonXP.Function.getBuyers",
+  "bindings" : [ {
+    "type" : "httpTrigger",
+    "direction" : "in",
+    "name" : "req",
+    "methods" : [ "GET" ]
+  }, {
+    "type" : "http",
+    "direction" : "out",
+    "name" : "$return"
+  } ]
+}
