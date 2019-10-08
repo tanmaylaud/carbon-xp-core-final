@@ -56,10 +56,10 @@ public class OfferGenerator {
             int companiesPtr = random.nextInt(companies.size());
             int catPtr = random.nextInt(categories.size());
             Offer offer = new Offer();
-            offer.setOfferId((int)Math.random());
+            offer.setOfferId(Math.floor(Math.random()*10000.0));
             offer.setOfferName(companies.get(companiesPtr));
             offer.setOfferDescription(categories.get(catPtr));
-            offer.setOfferValue((categories.size()-catPtr)*150);
+            offer.setOfferValue((categories.size()-catPtr)*50);
             offer.setCreditRating((categories.size()-catPtr)*100);
             offer.setValidity(new Date(2019,11,random.nextInt(28)+1));
             offers.add(offer);

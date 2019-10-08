@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.Objects;
 
 public class Offer {
-    private int offerId;
+    private double offerId;
     private String offerName;
     private String offerDescription;
     private int creditRating;
@@ -40,11 +40,11 @@ public class Offer {
         return Objects.hash(offerId, offerName, offerDescription, creditRating, offerValue);
     }
 
-    public int getOfferId() {
+    public double getOfferId() {
         return offerId;
     }
 
-    public void setOfferId(int offerId) {
+    public void setOfferId(double offerId) {
         this.offerId = offerId;
     }
 
