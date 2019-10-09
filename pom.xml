@@ -9,6 +9,10 @@
     <modules>
         <module>simulator-offers</module>
         <module>function-test</module>
+        <module>transaction-core</module>
+        <module>offer-core</module>
+        <module>simulator-transactions</module>
+        <module>transaction-evaluator</module>
     </modules>
     <packaging>pom</packaging>
 
