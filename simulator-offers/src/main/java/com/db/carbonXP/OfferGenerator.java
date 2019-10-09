@@ -23,7 +23,7 @@ public class OfferGenerator {
     OfferServiceImpl offerService;
     @Autowired
     Environment env;
-    @Value("${category1}")
+    @Value("${category1:test}")
     String mansi;
 
     public  void runMe () throws InterruptedException, IOException {
