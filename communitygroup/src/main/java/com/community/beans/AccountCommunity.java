@@ -25,4 +25,12 @@ public class AccountCommunity {
         this.communityId = communityId;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "AccountCommunity{" +
+                "accountNumber='" + accountNumber + '\'' +
+                ", communityId='" + communityId + '\'' +
+                '}';
+    }
 }

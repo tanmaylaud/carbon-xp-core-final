@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface AccountCommunityRepository extends MongoRepository<AccountCommunity, String> {
-    List<AccountCommunity> findByCommunityId(Long communtiyId);
+    List<AccountCommunity> findByCommunityId(String communityId);
 }
