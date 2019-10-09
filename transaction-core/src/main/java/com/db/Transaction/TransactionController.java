@@ -15,6 +15,8 @@ public class TransactionController {
     @Autowired
     TransactionServiceImpl transactionService;
 
+
+
     @RequestMapping(value = "/createTransaction",method = RequestMethod.POST)
     public String create(@RequestBody Transaction currentTransaction) {
         Optional<Transaction> previousTransaction=findLatestTransaction(currentTransaction.getAccountNumber());
@@ -23,6 +25,7 @@ public class TransactionController {
             updateTransaction(currentTransaction,previousTransaction.get());
         }
         currentTransaction.setTransactionId(new Date().getTime());
+
         transactionService.create(currentTransaction);
 
         return "Transaction is created.";

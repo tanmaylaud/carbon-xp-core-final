@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,8 @@ public class OfferController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
     @Autowired
     OfferService offerService;
+
+    private static long transactionNumber=10000;
 
 
     @PostMapping
@@ -36,10 +40,7 @@ public class OfferController {
     private Double getCarbonBalance(String accountNumber) {
         return offerService.getCarbonBalanceByAccountId(accountNumber);
     }
-   /* @GetMapping
-    public Offer getOffer() {
-        return new Offer(new Long(123), OfferStatus.UnClaimed,new Date(),"BookMyShow","",500,1000);
-    }*/
+
     @PostMapping("/{accountNumber}")
     public ResponseEntity<String> updateOffer(@PathVariable String accountNumber ,
                                          @RequestBody WalletOfferStatus walletOfferStatus) {
@@ -50,21 +51,26 @@ public class OfferController {
         if(offerOptional.isPresent()) {
             if(offerOptional.get().getOfferValue() < carbonBalance) {
 
+                Transaction transaction=new Transaction();
+                transaction.setAccountNumber(accountNumber);
+                transaction.setCategory(offerOptional.get().getOfferName());
+                transaction.setDescription(offerOptional.get().getOfferDescription());
+                transaction.setCreditDebitCarbonAmount(offerOptional.get().getOfferValue());
+                transaction.setCarbonBalance(getCarbonBalance((accountNumber))-offerOptional.get().getOfferValue());
+                transaction.setTransactionType("Debit");
+                offerService.addTransaction(transaction);
                 offerService.updateOffer(walletOfferStatus);
 
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>("Offer claimed ",HttpStatus.OK);
             }
 
+            return new ResponseEntity<>("Carbon balance is less",HttpStatus.BAD_REQUEST);
+
         }
-        return new ResponseEntity<>("Carbon balance is less",HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>("Offer is invalid ",HttpStatus.BAD_REQUEST);
 
     }
 
-    @PostMapping("/transaction")
-    public Transaction addTransaction(@RequestBody Transaction transaction) {
-
-        return offerService.addTransaction(transaction);
-    }
 
 
 }
