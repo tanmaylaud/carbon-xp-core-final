@@ -38,7 +38,12 @@ public class TransactionController {
         return transactionService.findByAccountNumber(accountNumber).stream().findFirst();
     }
 
-    private Optional<Transaction> findLatestTransaction(String accountNumber){
+    @GetMapping(value= "/getLatestTransaction/{account-number}")
+    public Optional<Transaction> getLatestTransactionByAccNum(@PathVariable(value= "account-number") String accountNumber) {
+        return findLatestTransaction(accountNumber);
+    }
+
+    public Optional<Transaction> findLatestTransaction(String accountNumber){
         return transactionService.findByAccountNumber(accountNumber).stream().
                 max(Comparator.comparing(Transaction::getTransactionId));
     }
