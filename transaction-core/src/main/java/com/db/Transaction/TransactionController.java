@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -21,7 +22,9 @@ public class TransactionController {
         if(previousTransaction.isPresent()){
             updateTransaction(currentTransaction,previousTransaction.get());
         }
+        currentTransaction.setTransactionId(new Date().getTime());
         transactionService.create(currentTransaction);
+
         return "Transaction is created.";
     }
 

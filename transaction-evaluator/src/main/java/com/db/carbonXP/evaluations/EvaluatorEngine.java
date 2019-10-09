@@ -124,7 +124,7 @@ public class EvaluatorEngine {
              transaction.setDate(simpleDateFormat.format(new Date()));
              transaction.setTransactionType("Credit");
              transaction.setDescription(transactionRaw.getDescription());
-             transaction.setTransactionId(new DateTime().getMillis());
+             transaction.setTransactionId(new Date().getTime());
              transaction.setCreditDebitCarbonAmount(credits);
              transaction.setCarbonBalance(lastTransaction.get().getCarbonBalance()+credits);
              transactionService.create(transaction);

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -16,6 +17,7 @@ public class UserController {
 
     @RequestMapping(value = "/createUser",method = RequestMethod.POST)
     public String create(@RequestBody User user) {
+        user.setAccountNumber(String.valueOf(new Date().getTime()));
         userService.create(user);
         return "user is created.";
     }
