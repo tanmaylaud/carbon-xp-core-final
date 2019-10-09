@@ -14,6 +14,8 @@ public class TransactionController {
     @Autowired
     TransactionServiceImpl transactionService;
 
+    private static long transactionNumber=1000;
+
     @RequestMapping(value = "/createTransaction",method = RequestMethod.POST)
     public String create(@RequestBody Transaction currentTransaction) {
         Optional<Transaction> previousTransaction=findLatestTransaction(currentTransaction.getAccountNumber());
@@ -21,6 +23,8 @@ public class TransactionController {
         if(previousTransaction.isPresent()){
             updateTransaction(currentTransaction,previousTransaction.get());
         }
+        currentTransaction.setTransactionId(transactionNumber);
+        transactionNumber++;
         transactionService.create(currentTransaction);
         return "Transaction is created.";
     }

@@ -14,8 +14,14 @@ public class UserController {
     @Autowired
     UserServiceImpl userService;
 
+    private static long accountNumber=1000;
+
+
     @RequestMapping(value = "/createUser",method = RequestMethod.POST)
     public String create(@RequestBody User user) {
+
+        user.setAccountNumber(String.valueOf(accountNumber));
+        accountNumber++;
         userService.create(user);
         return "user is created.";
     }
