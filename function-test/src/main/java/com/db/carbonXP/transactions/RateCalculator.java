@@ -1,4 +1,4 @@
-package com.db.carbonXP;
+package com.db.carbonXP.transactions;
 
 import java.util.Random;
 

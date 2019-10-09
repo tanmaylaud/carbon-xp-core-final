@@ -1,4 +1,4 @@
-package com.db.carbonXP;
+package com.db.carbonXP.offers;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;

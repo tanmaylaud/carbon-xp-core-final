@@ -1,17 +1,9 @@
-package com.db.carbonXP;
+package com.db.carbonXP.offers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
@@ -23,11 +15,10 @@ public class OfferGenerator {
     OfferServiceImpl offerService;
     @Autowired
     Environment env;
-    @Value("${category1}")
-    String mansi;
+
 
     public  void runMe () throws InterruptedException, IOException {
-        System.out.println(mansi);
+
 
         Random random = new Random();
         while(true){
@@ -47,7 +38,6 @@ public class OfferGenerator {
     public  List<Offer> generateOffers(int count){
         Random random = new Random();
         int categoryIdx = random.nextInt(4)+1;
-        System.out.println(env);
         List<String> categories= Arrays.asList(env.getProperty("category"+String.valueOf(categoryIdx)).split(","));
         List<String> companies= Arrays.asList(env.getProperty("companies"+String.valueOf(categoryIdx)).split(","));
         List<Offer> offers = new ArrayList<>();

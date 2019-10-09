@@ -1,4 +1,4 @@
-package com.db.carbonXP;
+package com.db.carbonXP.offers;
 
 
 import java.util.Date;
