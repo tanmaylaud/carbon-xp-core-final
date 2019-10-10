@@ -3,10 +3,7 @@ package com.db.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping(value = "api/mongo/transaction")
@@ -40,8 +37,10 @@ public class TransactionController {
 
 
     @GetMapping(value= "/getTransactionByAccountNumber/{account-number}")
-    public Optional<Transaction> getByAccountNumber(@PathVariable(value= "account-number") String accountNumber) {
-        return transactionService.findByAccountNumber(accountNumber).stream().findFirst();
+    public List<Transaction> getByAccountNumber(@PathVariable(value= "account-number") String accountNumber) {
+        List list = transactionService.findByAccountNumber(accountNumber);
+         Collections.sort(list,new Sortbyroll());
+         return list;
     }
 
     @GetMapping(value= "/getLatestTransaction/{account-number}")
@@ -60,6 +59,15 @@ public class TransactionController {
         currentTransaction.setCarbonBalance(currentTransaction.getCreditDebitCarbonAmount()+previousTransaction.getCarbonBalance());
 
 
+    }
+    class Sortbyroll implements Comparator<Transaction>
+    {
+        // Used for sorting in ascending order of
+        // roll number
+        public int compare(Transaction a, Transaction b)
+        {
+            return (int)(a.getTransactionId() - b.getTransactionId());
+        }
     }
 
 }

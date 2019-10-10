@@ -13,11 +13,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/offers")
+@CrossOrigin
 public class OfferController {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
     @Autowired
@@ -46,9 +48,11 @@ public class OfferController {
                                          @RequestBody WalletOfferStatus walletOfferStatus) {
         Double carbonBalance=getCarbonBalance(accountNumber);
         List<Offer> offers=offerService.getAllOffers(accountNumber,carbonBalance);
+        System.out.println("carbon balance :"+carbonBalance);
         Optional<Offer> offerOptional=
                 offers.stream().filter(x->x.getOfferId().equals(walletOfferStatus.getOfferId())).findFirst();
         if(offerOptional.isPresent()) {
+            System.out.println("offer value :"+offerOptional.get().getOfferValue());
             if(offerOptional.get().getOfferValue() < carbonBalance) {
 
                 Transaction transaction=new Transaction();
@@ -58,6 +62,7 @@ public class OfferController {
                 transaction.setCreditDebitCarbonAmount(offerOptional.get().getOfferValue());
                 transaction.setCarbonBalance(getCarbonBalance((accountNumber))-offerOptional.get().getOfferValue());
                 transaction.setTransactionType("Debit");
+                transaction.setTransactionId(new Date().getTime());
                 offerService.addTransaction(transaction);
                 offerService.updateOffer(walletOfferStatus);
 

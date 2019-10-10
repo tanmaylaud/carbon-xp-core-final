@@ -18,4 +18,8 @@ public interface UserService {
 
 
     public List <User> findAll();
+
+    public List<User> findUserByEmailId(String emailId);
+
+
 }

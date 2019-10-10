@@ -41,5 +41,10 @@ public class UserController {
         return userService.findByAccountNumber(accountNumber).stream().findFirst();
     }
 
+    @GetMapping(value= "/getUserByEmailId/{email-Id}")
+    public Optional<User> getUserByAccountNumber(@PathVariable(value= "email-Id") String emailId) {
+        return userService.findUserByEmailId(emailId).stream().findFirst();
+    }
+
 
 }

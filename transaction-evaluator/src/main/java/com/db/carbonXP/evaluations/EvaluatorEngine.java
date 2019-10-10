@@ -7,10 +7,13 @@ import com.microsoft.azure.servicebus.primitives.ServiceBusException;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.mongodb.core.aggregation.ArrayOperators;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
+import javax.print.DocFlavor;
 import java.io.*;
 import java.math.BigDecimal;
 import java.nio.charset.StandardCharsets;
@@ -49,13 +52,16 @@ public class EvaluatorEngine {
        }
     }
 
-    private void loadSkuMap() throws FileNotFoundException {
+    private void loadSkuMap() {
         System.out.println("Reached sku loader");
         BufferedReader reader;
-        File file = ResourceUtils.getFile("classpath:skudata.csv");
+        ClassPathResource classPathResource = new ClassPathResource("skudata.csv");
+
+
         skuMap = new HashMap<>();
         try {
-            reader = new BufferedReader(new FileReader(file));
+            InputStream inputStream = classPathResource.getInputStream();
+            reader = new BufferedReader(new InputStreamReader(inputStream,"UTF-8"));
             String line = reader.readLine();
             line = reader.readLine();
             Random random = new Random();
